@@ -1,0 +1,33 @@
+import csv
+from datetime import datetime
+
+def log_reading(filename='test_data.csv'):
+    with open(filename, 'a', newline='') as csvfile:
+        fieldnames = ['timestamp', 'date', 'time', 'ambient_temp_F', 'surface_temp_F', 'color_state', 'notes']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+        # Write header if file is empty
+        if csvfile.tell() == 0:
+            writer.writeheader()
+
+        print("Thermochromic Road Coating Data Logger")
+        date = input('Enter date (YYYY-MM-DD): ')
+        time = input('Enter time (HH:MM): ')
+        ambient = input('Ambient temperature (°F): ')
+        surface = input('Surface temperature (°F): ')
+        color = input('Color state (Dark/Light): ')
+        notes = input('Notes (optional): ')
+
+        writer.writerow({
+            'timestamp': datetime.now().isoformat(),
+            'date': date,
+            'time': time,
+            'ambient_temp_F': ambient,
+            'surface_temp_F': surface,
+            'color_state': color,
+            'notes': notes
+        })
+        print('Reading logged.')
+
+if __name__ == '__main__':
+    log_reading()
